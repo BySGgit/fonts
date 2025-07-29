@@ -96,18 +96,30 @@ const finalServicesArray = [];
 
 pricesData.forEach(category => {
     category.services.forEach(service => {
-        finalServicesArray.push({
-            'Название процедуры': service.name,
+        finalServicesArray.push([service.name, service.price]);
+    });
+});
+
+// Выводим итоговый массив в console.table с заголовками колонок
+console.table(finalServicesArray, ['0', '1']);
+
+// Альтернативный способ - объекты с короткими ключами
+const finalServicesTable = [];
+pricesData.forEach(category => {
+    category.services.forEach(service => {
+        finalServicesTable.push({
+            'Процедура': service.name,
             'Цена': service.price
         });
     });
 });
 
-// Выводим итоговый массив в console.table
-console.table(finalServicesArray);
+console.log('\n=== ТАБЛИЦА С ОБЪЕКТАМИ ===');
+console.table(finalServicesTable);
 
 console.log('\n=== ДОСТУПНЫЕ ПЕРЕМЕННЫЕ ===');
 console.log('pricesData - исходный массив с данными по категориям');
-console.log('finalServicesArray - итоговый массив только с названиями процедур и ценами');
+console.log('finalServicesArray - массив массивов [название, цена]');
+console.log('finalServicesTable - массив объектов {Процедура, Цена}');
 console.log('findService("текст") - функция поиска услуги по названию');
 console.log('\nПример использования поиска: findService("чистка")');
