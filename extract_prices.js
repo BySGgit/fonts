@@ -91,35 +91,54 @@ function findService(searchTerm) {
 // findService('чистка');
 // findService('лицо');
 
-// Создаем итоговый массив только с названием процедуры и ценой
-const finalServicesArray = [];
+// Тестируем работу console.table в вашем браузере
+console.log('=== ТЕСТ console.table ===');
+console.log('Тест 1 - простой массив:');
+console.table(["apples", "oranges", "bananas"]);
 
-pricesData.forEach(category => {
-    category.services.forEach(service => {
-        finalServicesArray.push([service.name, service.price]);
-    });
+console.log('Тест 2 - массив объектов:');
+console.table([
+    {name: "apple", color: "red"}, 
+    {name: "orange", color: "orange"}
+]);
+
+console.log('Тест 3 - объект с ключами:');
+console.table({
+    apple: {color: "red", size: "medium"},
+    orange: {color: "orange", size: "large"}
 });
 
-// Выводим итоговый массив в console.table с заголовками колонок
-console.table(finalServicesArray, ['0', '1']);
-
-// Альтернативный способ - объекты с короткими ключами
+// Создаем итоговый массив для наших данных
 const finalServicesTable = [];
+
 pricesData.forEach(category => {
     category.services.forEach(service => {
         finalServicesTable.push({
-            'Процедура': service.name,
-            'Цена': service.price
+            procedure: service.name,
+            price: service.price
         });
     });
 });
 
-console.log('\n=== ТАБЛИЦА С ОБЪЕКТАМИ ===');
+console.log('\n=== НАШИ ДАННЫЕ ===');
+console.log('Всего процедур найдено:', finalServicesTable.length);
+
+// Выводим таблицу
 console.table(finalServicesTable);
+
+// Дополнительно выводим обычным способом для проверки
+console.log('\n=== СПИСОК ПРОЦЕДУР ===');
+finalServicesTable.forEach((item, index) => {
+    console.log(`${index + 1}. ${item.procedure} - ${item.price}`);
+});
 
 console.log('\n=== ДОСТУПНЫЕ ПЕРЕМЕННЫЕ ===');
 console.log('pricesData - исходный массив с данными по категориям');
-console.log('finalServicesArray - массив массивов [название, цена]');
-console.log('finalServicesTable - массив объектов {Процедура, Цена}');
+console.log('finalServicesTable - массив объектов {procedure, price}');
 console.log('findService("текст") - функция поиска услуги по названию');
 console.log('\nПример использования поиска: findService("чистка")');
+
+// Если console.table не работает, используйте это:
+console.log('\n=== АЛЬТЕРНАТИВНЫЙ ВЫВОД ===');
+console.log('Если таблица не отображается, скопируйте finalServicesTable в другой инструмент:');
+console.log('finalServicesTable содержит:', finalServicesTable.length, 'элементов');
