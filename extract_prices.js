@@ -91,67 +91,23 @@ function findService(searchTerm) {
 // findService('чистка');
 // findService('лицо');
 
-// Функция для вывода всех услуг в табличном виде
-function showAllServicesTable() {
-    // Собираем все услуги из всех категорий в один массив
-    const allServices = [];
-    
-    pricesData.forEach(category => {
-        category.services.forEach(service => {
-            allServices.push({
-                'Категория': category.category,
-                'Название услуги': service.name,
-                'Цена': service.price
-            });
+// Создаем итоговый массив только с названием процедуры и ценой
+const finalServicesArray = [];
+
+pricesData.forEach(category => {
+    category.services.forEach(service => {
+        finalServicesArray.push({
+            'Название процедуры': service.name,
+            'Цена': service.price
         });
     });
-    
-    if (allServices.length > 0) {
-        console.log('\n=== ВСЕ УСЛУГИ В ТАБЛИЧНОМ ВИДЕ ===');
-        console.table(allServices);
-        
-        console.log(`\nВсего услуг: ${allServices.length}`);
-    } else {
-        console.log('Услуги не найдены');
-    }
-    
-    return allServices;
-}
+});
 
-// Функция для вывода услуг конкретной категории в табличном виде
-function showCategoryTable(categoryName) {
-    const category = pricesData.find(cat => 
-        cat.category.toLowerCase().includes(categoryName.toLowerCase())
-    );
-    
-    if (category) {
-        const services = category.services.map(service => ({
-            'Название услуги': service.name,
-            'Цена': service.price
-        }));
-        
-        console.log(`\n=== ${category.category.toUpperCase()} ===`);
-        console.table(services);
-        console.log(`Услуг в категории: ${services.length}`);
-        
-        return services;
-    } else {
-        console.log(`Категория "${categoryName}" не найдена`);
-        console.log('Доступные категории:');
-        pricesData.forEach(cat => console.log(`- ${cat.category}`));
-        return [];
-    }
-}
+// Выводим итоговый массив в console.table
+console.table(finalServicesArray);
 
-// Автоматически показываем таблицу со всеми услугами
-showAllServicesTable();
-
-console.log('\n=== ДОСТУПНЫЕ ФУНКЦИИ ===');
-console.log('pricesData - массив с данными о всех услугах');
-console.log('showAllServicesTable() - показать все услуги в таблице');
-console.log('showCategoryTable("название") - показать услуги конкретной категории');
-console.log('findService("текст") - поиск услуги по названию');
-console.log('\nПримеры использования:');
-console.log('showAllServicesTable()');
-console.log('showCategoryTable("гидропилинг")');
-console.log('findService("чистка")');
+console.log('\n=== ДОСТУПНЫЕ ПЕРЕМЕННЫЕ ===');
+console.log('pricesData - исходный массив с данными по категориям');
+console.log('finalServicesArray - итоговый массив только с названиями процедур и ценами');
+console.log('findService("текст") - функция поиска услуги по названию');
+console.log('\nПример использования поиска: findService("чистка")');
