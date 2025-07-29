@@ -98,8 +98,8 @@ console.table(["apples", "oranges", "bananas"]);
 
 console.log('Тест 2 - массив объектов:');
 console.table([
-    {name: "apple", color: "red"}, 
-    {name: "orange", color: "orange"}
+    {name: "apple", color: "red", type: "fruit"}, 
+    {name: "orange", color: "orange", type: "fruit"}
 ]);
 
 console.log('Тест 3 - объект с ключами:');
@@ -115,7 +115,8 @@ pricesData.forEach(category => {
     category.services.forEach(service => {
         finalServicesTable.push({
             procedure: service.name,
-            price: service.price
+            price: service.price,
+            service: category.category
         });
     });
 });
@@ -145,15 +146,21 @@ console.table(uniqueServicesTable);
 // Дополнительно выводим уникальные процедуры обычным способом
 console.log('\n=== СПИСОК УНИКАЛЬНЫХ ПРОЦЕДУР ===');
 uniqueServicesTable.forEach((item, index) => {
-    console.log(`${index + 1}. ${item.procedure} - ${item.price}`);
+    console.log(`${index + 1}. ${item.procedure} - ${item.price} (${item.service})`);
 });
 
 console.log('\n=== ДОСТУПНЫЕ ПЕРЕМЕННЫЕ ===');
 console.log('pricesData - исходный массив с данными по категориям');
-console.log('finalServicesTable - массив всех процедур (с дубликатами)');
-console.log('uniqueServicesTable - массив уникальных процедур (без дубликатов)');
+console.log('finalServicesTable - массив всех процедур {procedure, price, service}');
+console.log('uniqueServicesTable - массив уникальных процедур {procedure, price, service}');
 console.log('findService("текст") - функция поиска услуги по названию');
 console.log('\nПример использования поиска: findService("чистка")');
+
+// Показываем пример структуры данных
+console.log('\n=== ПРИМЕР СТРУКТУРЫ ДАННЫХ ===');
+if (uniqueServicesTable.length > 0) {
+    console.log('Пример записи:', uniqueServicesTable[0]);
+}
 
 // Если console.table не работает, используйте это:
 console.log('\n=== АЛЬТЕРНАТИВНЫЙ ВЫВОД ===');
