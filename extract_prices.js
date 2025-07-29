@@ -120,25 +120,43 @@ pricesData.forEach(category => {
     });
 });
 
-console.log('\n=== НАШИ ДАННЫЕ ===');
+console.log('\n=== НАШИ ДАННЫЕ (с дубликатами) ===');
 console.log('Всего процедур найдено:', finalServicesTable.length);
 
-// Выводим таблицу
-console.table(finalServicesTable);
+// Фильтруем дубликаты по названию процедуры
+const uniqueServicesTable = [];
+const seenProcedures = new Set();
 
-// Дополнительно выводим обычным способом для проверки
-console.log('\n=== СПИСОК ПРОЦЕДУР ===');
-finalServicesTable.forEach((item, index) => {
+finalServicesTable.forEach(service => {
+    if (!seenProcedures.has(service.procedure)) {
+        seenProcedures.add(service.procedure);
+        uniqueServicesTable.push(service);
+    }
+});
+
+console.log('\n=== УНИКАЛЬНЫЕ ДАННЫЕ (без дубликатов) ===');
+console.log('Было процедур:', finalServicesTable.length);
+console.log('Стало уникальных:', uniqueServicesTable.length);
+console.log('Удалено дубликатов:', finalServicesTable.length - uniqueServicesTable.length);
+
+// Выводим таблицу без дубликатов
+console.table(uniqueServicesTable);
+
+// Дополнительно выводим уникальные процедуры обычным способом
+console.log('\n=== СПИСОК УНИКАЛЬНЫХ ПРОЦЕДУР ===');
+uniqueServicesTable.forEach((item, index) => {
     console.log(`${index + 1}. ${item.procedure} - ${item.price}`);
 });
 
 console.log('\n=== ДОСТУПНЫЕ ПЕРЕМЕННЫЕ ===');
 console.log('pricesData - исходный массив с данными по категориям');
-console.log('finalServicesTable - массив объектов {procedure, price}');
+console.log('finalServicesTable - массив всех процедур (с дубликатами)');
+console.log('uniqueServicesTable - массив уникальных процедур (без дубликатов)');
 console.log('findService("текст") - функция поиска услуги по названию');
 console.log('\nПример использования поиска: findService("чистка")');
 
 // Если console.table не работает, используйте это:
 console.log('\n=== АЛЬТЕРНАТИВНЫЙ ВЫВОД ===');
-console.log('Если таблица не отображается, скопируйте finalServicesTable в другой инструмент:');
+console.log('Если таблица не отображается:');
 console.log('finalServicesTable содержит:', finalServicesTable.length, 'элементов');
+console.log('uniqueServicesTable содержит:', uniqueServicesTable.length, 'уникальных элементов');
